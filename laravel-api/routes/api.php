@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Shop\Auth\LoginController as ShopLoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 
 // Shop — phân hệ customer
 Route::prefix('shop')->group(function () {
+    Route::post('/auth/login', ShopLoginController::class);
+
     Route::middleware('ensure_guard:customer')->get('/ping', function (Request $request) {
         return ['type' => 'customer', 'id' => $request->user()->id];
     });

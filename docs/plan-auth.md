@@ -87,11 +87,13 @@ Thứ tự: **Foundation (T1–T3) → Login slices (T4–T6) → Account flows 
 
 ### Phase 2 — Login slices
 
-#### Task 4: FR-01 Customer Login (+ generic error, password policy nền)
+#### Task 4: FR-01 Customer Login (+ generic error, password policy nền) ✅ DONE
 **Description:** `POST /api/shop/auth/login` qua guard customer, trả `{access_token,type:"customer"}`, generic error, chặn status != ACTIVE.
 **Acceptance criteria (map AC-01.*):**
-- [ ] AC-01.1, AC-01.3, AC-01.4, AC-01.5, AC-01.6 pass.
-- [ ] AC-01.2: email thuộc employees → 401 generic (không lộ tồn tại).
+- [x] AC-01.1, AC-01.3, AC-01.4, AC-01.5, AC-01.6 pass.
+- [x] AC-01.2: email thuộc employees → 401 generic (không lộ tồn tại).
+> 8 tests. Sai pass/email không tồn tại/email employee → 401 generic; INACTIVE/LOCKED → 403; validation 422.
+> Kiến trúc phân lớp: `LoginController` → `Services\Shop\CustomerAuthService` → `Repositories\Contracts\CustomerRepositoryInterface` (bind → `Eloquent\CustomerRepository`) → `Customer`. FormRequest `Shop\Auth\LoginRequest`. Exception domain `AccountNotActiveException` (403). **Các task sau theo cùng pattern.**
 **Verification:** `php artisan test --filter=ShopLoginTest`.
 **Dependencies:** Task 3
 **Files:** `app/Http/Controllers/Shop/Auth/LoginController.php`, `routes/api.php`, `tests/Feature/Auth/ShopLoginTest.php`
