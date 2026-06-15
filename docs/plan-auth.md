@@ -138,9 +138,10 @@ Thứ tự: **Foundation (T1–T3) → Login slices (T4–T6) → Account flows 
 **Files:** `app/Http/Controllers/Shop/Auth/RegisterController.php`, `app/Http/Requests/RegisterRequest.php`, `routes/api.php`, `tests/Feature/Auth/RegisterTest.php`
 **Scope:** M
 
-#### Task 8: FR-04 Forgot/Reset Password (Shop & CRM)
+#### Task 8: FR-04 Forgot/Reset Password (Shop & CRM) ✅ DONE
 **Description:** forgot-password (gửi token, response generic) + reset-password (đổi pass, revoke token cũ), tách biệt 2 phân hệ.
 **Acceptance criteria:** AC-04.1–AC-04.5 pass.
+> 7 tests. Password broker riêng (`customers`/`employees`) + bảng reset token riêng → isolation. `PasswordResetService` (broker param) revoke `tokens()->delete()` sau reset. Forgot luôn 200 generic. Test dùng `Notification::fake()`. Email driver thật chốt sau (Open Question §9.2).
 **Verification:** `php artisan test --filter=PasswordResetTest` (dùng `Mail::fake()`).
 **Dependencies:** Task 4, Task 5
 **Files:** `app/Http/Controllers/{Shop,Crm}/Auth/PasswordController.php`, `routes/api.php`, `tests/Feature/Auth/PasswordResetTest.php`
