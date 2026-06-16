@@ -173,17 +173,18 @@ Thứ tự: **Foundation (T1–T3) → Login slices (T4–T6) → Account flows 
 **Files:** `routes/api.php`(middleware groups), `app/Policies/*`, `tests/Feature/Auth/RbacTest.php`
 **Scope:** M
 
-#### Task 11: FR-06 Admin quản lý Employee (CRUD tối thiểu)
+#### Task 11: FR-06 Admin quản lý Employee (CRUD tối thiểu) ✅ DONE
 **Description:** `/api/crm/employees` CRUD do admin, gán role khi tạo; employee mới login được CRM.
 **Acceptance criteria:** AC-06.5 pass; employee thường gọi → 403.
+> 6 tests. `EmployeeController` (index/store) → `EmployeeManagementService` → `EmployeeRepository`. `StoreEmployeeRequest` (unique:employees, role in employee|admin). Guard `permission:manage_employee`. Lưu ý: set `status` tường minh khi create (DB default chưa nạp vào model in-memory).
 **Verification:** `php artisan test --filter=EmployeeAdminTest`.
 **Dependencies:** Task 10
 **Files:** `app/Http/Controllers/Crm/EmployeeController.php`, `app/Http/Requests/EmployeeRequest.php`, `routes/api.php`, `tests/Feature/Auth/EmployeeAdminTest.php`
 **Scope:** M
 > Các endpoint Product/Order/Customer khác: chỉ skeleton + RBAC guard (CRUD nghiệp vụ ngoài scope auth).
 
-### ✅ Checkpoint: Authz (sau T10–T11)
-- [ ] Ma trận quyền spec §6 FR-03 đúng; admin tạo employee chạy được. Review.
+### ✅ Checkpoint: Authz (sau T10–T11) — ĐẠT
+- [x] Ma trận quyền spec §6 đúng; admin tạo employee chạy được, employee mới login OK. Full suite 67 passed.
 
 ---
 

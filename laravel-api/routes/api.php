@@ -3,6 +3,7 @@
 use App\Http\Controllers\Crm\Auth\LoginController as CrmLoginController;
 use App\Http\Controllers\Crm\Auth\LogoutController as CrmLogoutController;
 use App\Http\Controllers\Crm\Auth\PasswordController as CrmPasswordController;
+use App\Http\Controllers\Crm\EmployeeController;
 use App\Http\Controllers\Shop\Auth\LoginController as ShopLoginController;
 use App\Http\Controllers\Shop\Auth\LogoutController as ShopLogoutController;
 use App\Http\Controllers\Shop\Auth\PasswordController as ShopPasswordController;
@@ -52,7 +53,11 @@ Route::prefix('crm')->group(function () {
         Route::middleware('permission:manage_product')->get('/products', fn () => ['data' => []]);
         Route::middleware('permission:manage_order')->get('/orders', fn () => ['data' => []]);
         Route::middleware('permission:manage_customer')->get('/customers', fn () => ['data' => []]);
-        Route::middleware('permission:manage_employee')->get('/employees', fn () => ['data' => []]);
+
+        Route::middleware('permission:manage_employee')->group(function () {
+            Route::get('/employees', [EmployeeController::class, 'index']);
+            Route::post('/employees', [EmployeeController::class, 'store']);
+        });
         Route::middleware('permission:system_config')->get('/system-config', fn () => ['data' => []]);
     });
 });
