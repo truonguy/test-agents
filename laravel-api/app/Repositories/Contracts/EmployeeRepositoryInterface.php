@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Employee;
+use Illuminate\Database\Eloquent\Collection;
 
 interface EmployeeRepositoryInterface
 {
@@ -14,7 +15,7 @@ interface EmployeeRepositoryInterface
     public function create(array $data): Employee;
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection<int, Employee>
+     * @return Collection<int, Employee>
      */
-    public function all(): \Illuminate\Database\Eloquent\Collection;
+    public function all(): Collection;
 }

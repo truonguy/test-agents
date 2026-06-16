@@ -6,6 +6,7 @@ use App\Repositories\Contracts\CustomerRepositoryInterface;
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use App\Repositories\Eloquent\CustomerRepository;
 use App\Repositories\Eloquent\EmployeeRepository;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 
@@ -34,6 +35,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Link reset password trỏ về frontend (API không có web route 'password.reset').
+        ResetPassword::createUrlUsing(function ($notifiable, string $token): string {
+            $base = rtrim((string) config('app.frontend_url', config('app.url')), '/');
+            $email = urlencode($notifiable->getEmailForPasswordReset());
+
+            return "{$base}/reset-password?token={$token}&email={$email}";
+        });
+
         // Auto-logout theo inactivity (spec §7, AC-07.4): từ chối token nếu
         // last_used_at (hoặc created_at) cũ hơn ngưỡng inactivity_timeout.
         Sanctum::authenticateAccessTokensUsing(function ($accessToken, bool $isValid): bool {

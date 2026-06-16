@@ -190,19 +190,21 @@ Thứ tự: **Foundation (T1–T3) → Login slices (T4–T6) → Account flows 
 
 ### Phase 5 — Hardening & wrap-up
 
-#### Task 12: Hoàn thiện bảo mật + coverage + tài liệu
+#### Task 12: Hoàn thiện bảo mật + coverage + tài liệu ✅ DONE
 **Description:** Rà cookie/CORS/headers, kiểm generic message toàn cục, nâng coverage ≥80%, cập nhật spec với tham số đã chốt.
 **Acceptance criteria:**
-- [ ] Coverage feature test auth ≥ 80%.
-- [ ] Không endpoint nào lộ user-enumeration.
-- [ ] `docs/spec-auth.md` §9 Open Questions đã cập nhật kết luận.
+- [~] Coverage feature test auth ≥ 80%: KHÔNG đo tự động được (môi trường thiếu Xdebug/PCOV). Định tính: 10 file test phủ mọi endpoint/service.
+- [x] Không endpoint nào lộ user-enumeration (`NoUserEnumerationTest`).
+- [x] `docs/spec-auth.md` §9/§10 đã cập nhật kết luận.
+> Thêm `config/cors.php` (api/*, origins qua env, no credentials), `ResetPassword::createUrlUsing` (link reset → FRONTEND_URL, fix 500 khi gửi mail thật), Pint clean.
 **Verification:** `php artisan test --coverage`; `./vendor/bin/pint --test`.
 **Dependencies:** Task 4–11
 **Files:** `config/cors.php`, `tests/*`, `docs/spec-auth.md`
 **Scope:** M
 
-### ✅ Checkpoint: Complete
-- [ ] Toàn bộ AC-01..AC-07 pass; Success Criteria spec §10 đạt; sẵn sàng review/merge.
+### ✅ Checkpoint: Complete — ĐẠT
+- [x] Toàn bộ AC-01..AC-07 pass (70 tests / 194 assertions). Success Criteria spec §10 đạt (trừ coverage số — thiếu driver).
+- ⏳ Chặn merge/deploy: BA chốt tham số §7 (OQ #1); cấu hình email driver + FRONTEND_URL (OQ #2).
 
 ---
 

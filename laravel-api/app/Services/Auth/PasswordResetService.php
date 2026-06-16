@@ -3,8 +3,10 @@
 namespace App\Services\Auth;
 
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Laravel\Sanctum\Contracts\HasApiTokens;
 
 /**
  * Quên/đặt lại mật khẩu dùng password broker theo phân hệ (customers/employees),
@@ -30,7 +32,7 @@ class PasswordResetService
         $status = Password::broker($broker)->reset(
             $credentials,
             function (CanResetPassword $user, string $password): void {
-                /** @var \Illuminate\Database\Eloquent\Model&\Laravel\Sanctum\Contracts\HasApiTokens $user */
+                /** @var Model&HasApiTokens $user */
                 $user->forceFill(['password' => Hash::make($password)])->save();
 
                 // Revoke toàn bộ token hiện có (buộc đăng nhập lại sau khi đổi mật khẩu).

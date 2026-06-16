@@ -5,9 +5,11 @@ namespace Tests\Feature\Auth;
 use App\Enums\UserStatus;
 use App\Models\Customer;
 use App\Models\Employee;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Tests\TestCase;
 
@@ -59,7 +61,7 @@ class MigrationModelTest extends TestCase
         $this->assertContains(HasApiTokens::class, $uses);
         $this->assertContains(HasRoles::class, $uses);
 
-        \Spatie\Permission\Models\Role::create(['name' => 'employee', 'guard_name' => 'employee']);
+        Role::create(['name' => 'employee', 'guard_name' => 'employee']);
         $employee->assignRole('employee');
 
         $this->assertTrue($employee->hasRole('employee'));
@@ -69,7 +71,7 @@ class MigrationModelTest extends TestCase
     {
         Customer::factory()->create(['email' => 'dup@example.com']);
 
-        $this->expectException(\Illuminate\Database\QueryException::class);
+        $this->expectException(QueryException::class);
         Customer::factory()->create(['email' => 'dup@example.com']);
     }
 }

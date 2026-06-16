@@ -5,10 +5,11 @@ namespace App\Services\Crm;
 use App\Enums\UserStatus;
 use App\Exceptions\AccountNotActiveException;
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
+use App\Services\AuditLogger;
 use App\Services\Auth\AccountLockout;
 use App\Services\Auth\LoginThrottle;
-use App\Services\AuditLogger;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Support\Facades\Hash;
 
 class EmployeeAuthService
@@ -27,7 +28,7 @@ class EmployeeAuthService
      *
      * @return array{access_token: string, type: string, role: string|null}
      *
-     * @throws \Illuminate\Http\Exceptions\ThrottleRequestsException vượt rate limit (429)
+     * @throws ThrottleRequestsException vượt rate limit (429)
      * @throws AuthenticationException sai email/mật khẩu (generic 401)
      * @throws AccountNotActiveException status != ACTIVE (403)
      */

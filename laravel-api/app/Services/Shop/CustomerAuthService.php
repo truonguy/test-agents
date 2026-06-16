@@ -8,6 +8,7 @@ use App\Repositories\Contracts\CustomerRepositoryInterface;
 use App\Services\Auth\AccountLockout;
 use App\Services\Auth\LoginThrottle;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerAuthService
@@ -23,7 +24,7 @@ class CustomerAuthService
      *
      * @return array{access_token: string, type: string}
      *
-     * @throws \Illuminate\Http\Exceptions\ThrottleRequestsException vượt rate limit (429)
+     * @throws ThrottleRequestsException vượt rate limit (429)
      * @throws AuthenticationException sai email/mật khẩu (generic 401)
      * @throws AccountNotActiveException status != ACTIVE (403)
      */

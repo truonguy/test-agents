@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Enums\UserStatus;
 use App\Models\Customer;
 use App\Models\Employee;
 use Database\Seeders\RolePermissionSeeder;
@@ -86,7 +87,7 @@ class CrmLoginTest extends TestCase
     public function test_inactive_employee_is_forbidden(): void
     {
         $this->makeEmployee('employee', ['email' => 'emp@example.com'])
-            ->update(['status' => \App\Enums\UserStatus::INACTIVE]);
+            ->update(['status' => UserStatus::INACTIVE]);
 
         $this->login(['email' => 'emp@example.com', 'password' => 'secret123'])
             ->assertForbidden();
