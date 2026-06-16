@@ -37,12 +37,13 @@ Thứ tự: **Foundation (T1–T2) → CRM CRUD (T3–T6) → Shop (T7–T9) →
 
 ### Phase 1 — Foundation
 
-#### Task 1: Dependency + Migrations + Models + soft delete
+#### Task 1: Dependency + Migrations + Models + soft delete ✅ DONE
 **Description:** Cài `intervention/image`; migration `categories`(parent_id, slug), `products`, `product_variants`, `inventories`, `product_media`; model + SoftDeletes + quan hệ; enum `PublishStatus`.
 **Acceptance:**
-- [ ] `migrate:fresh` sạch; SoftDeletes hoạt động.
-- [ ] slug unique (categories, products); sku unique (variants); `inventories.product_variant_id` unique (1-1).
-- [ ] Quan hệ: product→category, variant→product, inventory→variant, media→product; category self-FK `parent_id`.
+- [x] `migrate:fresh` sạch; SoftDeletes hoạt động.
+- [x] slug unique (categories, products); sku unique (variants); `inventories.product_variant_id` unique (1-1).
+- [x] Quan hệ: product→category, variant→product, inventory→variant, media→product; category self-FK `parent_id`.
+> 6 tests. Cài `intervention/image-laravel ^1.5`. 5 model + 5 factory + `PublishStatus` enum. Index `(publish_status,category_id)`, `(product_id,price)`. Inventory không soft-delete (theo spec). Unique slug DB hard — validate ignore soft-deleted ở T3/T4.
 **Verify:** `php artisan test --filter=ProductSchema`.
 **Dependencies:** None
 **Files:** `composer.json`, `database/migrations/*` (×5), `app/Models/{Category,Product,ProductVariant,Inventory,ProductMedia}.php`, `app/Enums/PublishStatus.php`
