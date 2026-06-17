@@ -117,9 +117,10 @@ Thứ tự: **Cart (T1–T5) → Order schema + reserve (T6–T7) → Checkout (
 **Files:** `Shop/CheckoutController`, `Http/Requests/Shop/CheckoutRequest`, `Services/Shop/CheckoutService`, `Services/Order/OrderService`, `Repositories/.../OrderRepository*`, route, test
 **Scope:** L → nếu lớn tách T7a (happy path) / T7b (rollback/insufficient).
 
-#### Task 8: Customer orders (list/detail/cancel) · `ensure_guard:customer`
+#### Task 8: Customer orders (list/detail/cancel) · `ensure_guard:customer` ✅ DONE
 **Description:** `GET /api/orders` (paginate), `GET /api/orders/{order}` (chỉ của mình), `POST /api/orders/{order}/cancel` (PENDING → CANCELLED + release).
 **Acceptance (FR-C9, FR-C12):** AC-C9.1–C9.2, AC-C12.1–C12.2.
+> 7 tests. `OrderService.listForCustomer` (PaginationService) + `transition` (state machine + release/consume). Ownership → 404; customer cancel chỉ PENDING (else 422) + release stock.
 **Verify:** `php artisan test --filter=CustomerOrderTest`.
 **Dependencies:** T7
 **Files:** `Shop/OrderController`, `OrderService`(cancel dùng StateMachine + reservation), route, test
