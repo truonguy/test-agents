@@ -9,6 +9,7 @@ use App\Http\Controllers\Crm\InventoryController;
 use App\Http\Controllers\Crm\ProductController;
 use App\Http\Controllers\Crm\VariantController;
 use App\Http\Controllers\Shop\Auth\LoginController as ShopLoginController;
+use App\Http\Controllers\Shop\CatalogController;
 use App\Http\Controllers\Shop\Auth\LogoutController as ShopLogoutController;
 use App\Http\Controllers\Shop\Auth\PasswordController as ShopPasswordController;
 use App\Http\Controllers\Shop\Auth\RegisterController as ShopRegisterController;
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 | Shop (guard: customer) và CRM (guard: employee) tách biệt hoàn toàn.
 | Các route auth (login/register/...) được thêm dần ở các task sau.
 */
+
+// Public catalog (Shop) — không cần token, chỉ PUBLISHED
+Route::get('/products', [CatalogController::class, 'index']);
 
 // Shop — phân hệ customer
 Route::prefix('shop')->group(function () {

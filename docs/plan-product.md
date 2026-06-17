@@ -110,9 +110,11 @@ Thứ tự: **Foundation (T1–T2) → CRM CRUD (T3–T6) → Shop (T7–T9) →
 
 ### Phase 3 — Shop APIs (public)
 
-#### Task 7: Shop Product Listing · public
+#### Task 7: Shop Product Listing · public ✅ DONE
 **Description:** `GET /api/products` — chỉ PUBLISHED; filter (category, price range), sort (price/created), paginate. Giá = min(variant.price).
 **Acceptance (FR-P6):** AC-P6.1–P6.2; ẩn DRAFT/ARCHIVED/soft-deleted; không cần token.
+> 6 tests. `ProductSearchService` (`withMin('variants','price')`, filter category/price, sort price_asc/desc, paginate). Route public `GET /api/products` ngoài ensure_guard.
+> **Tái sử dụng:** thêm `Services\Support\PaginationService` (chuẩn hoá per_page, clamp ≤100, envelope `{data, meta}`) — dùng cho listing + search (T9) + có thể CRM lists. Response listing/search dùng envelope `meta.total/per_page/...`. (+2 tests `PaginationServiceTest`)
 **Verify:** `php artisan test --filter=ShopListingTest`.
 **Dependencies:** T5 (cần variant price)
 **Files:** `Shop/CatalogController`(index), `Services/Catalog/ProductSearchService`(criteria), route (ngoài ensure_guard), test
