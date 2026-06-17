@@ -92,16 +92,17 @@ Thứ tự: **Cart (T1–T5) → Order schema + reserve (T6–T7) → Checkout (
 **Files:** `database/migrations/*`(×2), `app/Models/{Order,OrderItem}.php`, `app/Enums/OrderStatus.php`, `app/Services/Order/OrderStateMachine.php`, factories, tests
 **Scope:** M
 
-#### Task 6: InventoryReservationService (reserve/release/consume)
+#### Task 6: InventoryReservationService (reserve/release/consume) ✅ DONE
 **Description:** Service thao tác inventory với `lockForUpdate` trong transaction: `reserve(variant,qty)` (available−/reserved+, ném nếu thiếu), `release`, `consume`. Invariant available≥0.
 **Acceptance (FR-C7):** AC-C7.1–C7.2.
+> 6 tests. `lockForUpdate` chống oversell. reserve thiếu/không-inventory → `InsufficientStockException`(422), inventory không đổi. release: available+/reserved−. consume: reserved− only.
 **Verify:** `php artisan test --filter=InventoryReservationTest`.
 **Dependencies:** None (dùng inventory có sẵn)
 **Files:** `app/Services/Order/InventoryReservationService.php`, `app/Exceptions/InsufficientStockException.php`, test
 **Scope:** M
 
-### ✅ Checkpoint: Order foundation (T5–T6)
-- [ ] State machine + reserve/release/consume đúng, invariant available≥0. Review.
+### ✅ Checkpoint: Order foundation (T5–T6) — ĐẠT
+- [x] State machine + reserve/release/consume đúng, invariant available≥0. Full suite 190 passed.
 
 ---
 
