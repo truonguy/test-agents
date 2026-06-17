@@ -85,9 +85,10 @@ Thứ tự: **Foundation (T1–T2) → CRM CRUD (T3–T6) → Shop (T7–T9) →
 **Files:** `Crm/ProductController`, `Http/Requests/Crm/{Store,Update}ProductRequest`, `Services/Crm/ProductService`, `Repositories/.../ProductRepository*`, route, test
 **Scope:** L → nếu cần tách T4a (create/update) / T4b (list/detail/delete).
 
-#### Task 5: Product Variant CRUD · `permission:manage_product`
+#### Task 5: Product Variant CRUD · `permission:manage_product` ✅ DONE
 **Description:** Variant (size/color/sku/price) thuộc product; nhiều variant; sku unique; price>=0.
 **Acceptance (FR-P4):** AC-P4.1–P4.3 pass.
+> 10 tests. Nested routes `products/{product}/variants` (index/store) + `variants/{variant}` (update/delete). sku hard-unique, price `numeric|min:0`, soft delete.
 **Verify:** `php artisan test --filter=VariantCrudTest`.
 **Dependencies:** T4
 **Files:** `Crm/VariantController`, `Http/Requests/Crm/StoreVariantRequest`, `Services/Crm/VariantService`, `Repositories/.../VariantRepository*`, route, test

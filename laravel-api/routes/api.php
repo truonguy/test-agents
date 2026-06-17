@@ -6,6 +6,7 @@ use App\Http\Controllers\Crm\Auth\PasswordController as CrmPasswordController;
 use App\Http\Controllers\Crm\CategoryController;
 use App\Http\Controllers\Crm\EmployeeController;
 use App\Http\Controllers\Crm\ProductController;
+use App\Http\Controllers\Crm\VariantController;
 use App\Http\Controllers\Shop\Auth\LoginController as ShopLoginController;
 use App\Http\Controllers\Shop\Auth\LogoutController as ShopLogoutController;
 use App\Http\Controllers\Shop\Auth\PasswordController as ShopPasswordController;
@@ -63,6 +64,11 @@ Route::prefix('crm')->group(function () {
             Route::post('/products', [ProductController::class, 'store']);
             Route::put('/products/{product}', [ProductController::class, 'update']);
             Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+
+            Route::get('/products/{product}/variants', [VariantController::class, 'index']);
+            Route::post('/products/{product}/variants', [VariantController::class, 'store']);
+            Route::put('/variants/{variant}', [VariantController::class, 'update']);
+            Route::delete('/variants/{variant}', [VariantController::class, 'destroy']);
         });
         Route::middleware('permission:manage_order')->get('/orders', fn () => ['data' => []]);
         Route::middleware('permission:manage_customer')->get('/customers', fn () => ['data' => []]);
