@@ -49,9 +49,10 @@ Thứ tự: **Cart (T1–T5) → Order schema + reserve (T6–T7) → Checkout (
 **Files:** `database/migrations/*`(×2), `app/Models/{Cart,CartItem}.php`, factories
 **Scope:** S
 
-#### Task 2: Add to cart (+ merge) · `ensure_guard:customer`
+#### Task 2: Add to cart (+ merge) · `ensure_guard:customer` ✅ DONE
 **Description:** `POST /api/cart/items`; auto-tạo cart; validate published+variant+qty; merge qty khi trùng.
 **Acceptance (FR-C2):** AC-C2.1–C2.5.
+> 7 tests. Layered Controller→CartService→CartRepository (`activeCartFor` firstOrCreate). `AddCartItemRequest` closure rule (variant + product PUBLISHED). merge qty (`firstOrNew`). Route nhóm `ensure_guard:customer`. employee/no-token → 401.
 **Verify:** `php artisan test --filter=AddToCartTest`.
 **Dependencies:** T1
 **Files:** `Shop/CartController`, `Http/Requests/Shop/AddCartItemRequest`, `Services/Shop/CartService`, `Repositories/.../CartRepository*`, route, test

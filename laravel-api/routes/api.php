@@ -10,6 +10,7 @@ use App\Http\Controllers\Crm\ProductController;
 use App\Http\Controllers\Crm\ProductMediaController;
 use App\Http\Controllers\Crm\VariantController;
 use App\Http\Controllers\Shop\Auth\LoginController as ShopLoginController;
+use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Shop\CatalogController;
 use App\Http\Controllers\Shop\Auth\LogoutController as ShopLogoutController;
 use App\Http\Controllers\Shop\Auth\PasswordController as ShopPasswordController;
@@ -28,6 +29,11 @@ use Illuminate\Support\Facades\Route;
 // Public catalog (Shop) — không cần token, chỉ PUBLISHED
 Route::get('/products', [CatalogController::class, 'index']);
 Route::get('/products/{slug}', [CatalogController::class, 'show']);
+
+// Cart / Order (customer) — yêu cầu customer token
+Route::middleware('ensure_guard:customer')->group(function () {
+    Route::post('/cart/items', [CartController::class, 'store']);
+});
 
 // Shop — phân hệ customer
 Route::prefix('shop')->group(function () {

@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\CartRepositoryInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\CustomerRepositoryInterface;
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use App\Repositories\Contracts\InventoryRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Repositories\Contracts\VariantRepositoryInterface;
+use App\Repositories\Eloquent\CartRepository;
 use App\Repositories\Eloquent\CategoryRepository;
 use App\Repositories\Eloquent\CustomerRepository;
 use App\Repositories\Eloquent\EmployeeRepository;
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         ProductRepositoryInterface::class => ProductRepository::class,
         VariantRepositoryInterface::class => VariantRepository::class,
         InventoryRepositoryInterface::class => InventoryRepository::class,
+        CartRepositoryInterface::class => CartRepository::class,
     ];
 
     /**
