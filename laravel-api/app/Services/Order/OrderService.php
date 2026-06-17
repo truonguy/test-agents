@@ -41,6 +41,20 @@ class OrderService
     }
 
     /**
+     * Danh sách order toàn hệ (CRM), filter status tuỳ chọn.
+     */
+    public function listAll(mixed $perPage = null, ?string $status = null): LengthAwarePaginator
+    {
+        $query = Order::query()->latest('id');
+
+        if ($status !== null && $status !== '') {
+            $query->where('status', $status);
+        }
+
+        return $this->pagination->paginate($query, $perPage);
+    }
+
+    /**
      * Áp dụng transition (confirm/pack/ship/complete/cancel) + side-effect tồn kho:
      * cancel → release; complete → consume. Tất cả trong 1 transaction.
      */

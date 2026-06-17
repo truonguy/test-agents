@@ -126,16 +126,17 @@ Thứ tự: **Cart (T1–T5) → Order schema + reserve (T6–T7) → Checkout (
 **Files:** `Shop/OrderController`, `OrderService`(cancel dùng StateMachine + reservation), route, test
 **Scope:** M
 
-#### Task 9: CRM order management (state machine) · `permission:manage_order`
+#### Task 9: CRM order management (state machine) · `permission:manage_order` ✅ DONE
 **Description:** list/detail CRM + `POST /api/crm/orders/{order}/{confirm|pack|ship|complete|cancel}`. Cancel→release, complete→consume.
 **Acceptance (FR-C10):** AC-C10.1–C10.4.
+> 9 tests. `OrderManagementController.apply` (route whereIn action) tái dùng `OrderService.transition`. list filter status + paginate. complete→consume, cancel→release. invalid→422; customer→401; thiếu manage_order→403.
 **Verify:** `php artisan test --filter=CrmOrderTest`.
 **Dependencies:** T7
 **Files:** `Crm/OrderManagementController`, `OrderService`(transition), route, test
 **Scope:** L → tách T9a (confirm/pack/ship/complete) / T9b (cancel+release, list/detail) nếu cần.
 
-### ✅ Checkpoint: Order flow (T7–T9)
-- [ ] Checkout→order→lifecycle end-to-end; reserve/release/consume đúng theo transition. Review.
+### ✅ Checkpoint: Order flow (T7–T9) — ĐẠT
+- [x] Checkout→order→lifecycle end-to-end; reserve/release/consume đúng theo transition. Full suite 212 passed.
 
 ---
 

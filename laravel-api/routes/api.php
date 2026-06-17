@@ -6,6 +6,7 @@ use App\Http\Controllers\Crm\Auth\PasswordController as CrmPasswordController;
 use App\Http\Controllers\Crm\CategoryController;
 use App\Http\Controllers\Crm\EmployeeController;
 use App\Http\Controllers\Crm\InventoryController;
+use App\Http\Controllers\Crm\OrderManagementController;
 use App\Http\Controllers\Crm\ProductController;
 use App\Http\Controllers\Crm\ProductMediaController;
 use App\Http\Controllers\Crm\VariantController;
@@ -109,7 +110,13 @@ Route::prefix('crm')->group(function () {
             Route::post('/products/{product}/publish', [ProductController::class, 'publish']);
             Route::post('/products/{product}/unpublish', [ProductController::class, 'unpublish']);
         });
-        Route::middleware('permission:manage_order')->get('/orders', fn () => ['data' => []]);
+        Route::middleware('permission:manage_order')->group(function () {
+            Route::get('/orders', [OrderManagementController::class, 'index']);
+            Route::get('/orders/{order}', [OrderManagementController::class, 'show']);
+            Route::post('/orders/{order}/{action}', [OrderManagementController::class, 'apply'])
+                ->whereIn('action', ['confirm', 'pack', 'ship', 'complete', 'cancel']);
+        });
+
         Route::middleware('permission:manage_customer')->get('/customers', fn () => ['data' => []]);
 
         Route::middleware('permission:manage_employee')->group(function () {
