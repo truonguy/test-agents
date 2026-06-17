@@ -5,6 +5,7 @@ use App\Http\Controllers\Crm\Auth\LogoutController as CrmLogoutController;
 use App\Http\Controllers\Crm\Auth\PasswordController as CrmPasswordController;
 use App\Http\Controllers\Crm\CategoryController;
 use App\Http\Controllers\Crm\EmployeeController;
+use App\Http\Controllers\Crm\ProductController;
 use App\Http\Controllers\Shop\Auth\LoginController as ShopLoginController;
 use App\Http\Controllers\Shop\Auth\LogoutController as ShopLogoutController;
 use App\Http\Controllers\Shop\Auth\PasswordController as ShopPasswordController;
@@ -56,9 +57,13 @@ Route::prefix('crm')->group(function () {
             Route::post('/categories', [CategoryController::class, 'store']);
             Route::put('/categories/{category}', [CategoryController::class, 'update']);
             Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
-        });
 
-        Route::middleware('permission:manage_product')->get('/products', fn () => ['data' => []]);
+            Route::get('/products', [ProductController::class, 'index']);
+            Route::get('/products/{product}', [ProductController::class, 'show']);
+            Route::post('/products', [ProductController::class, 'store']);
+            Route::put('/products/{product}', [ProductController::class, 'update']);
+            Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+        });
         Route::middleware('permission:manage_order')->get('/orders', fn () => ['data' => []]);
         Route::middleware('permission:manage_customer')->get('/customers', fn () => ['data' => []]);
 

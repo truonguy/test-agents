@@ -76,9 +76,10 @@ Thứ tự: **Foundation (T1–T2) → CRM CRUD (T3–T6) → Shop (T7–T9) →
 **Files:** `Crm/CategoryController`, `Http/Requests/Crm/{Store,Update}CategoryRequest`, `Services/Crm/CategoryService`, `Repositories/{Contracts,Eloquent}/CategoryRepository*`, route, test
 **Scope:** M
 
-#### Task 4: Product CRUD (CRM) · `permission:manage_product`
+#### Task 4: Product CRUD (CRM) · `permission:manage_product` ✅ DONE
 **Description:** CRUD product (name/slug/description/category_id/publish_status); CRM thấy mọi status; soft delete. Đổi sang PUBLISHED tách sang T6 (publish gate).
 **Acceptance (FR-P3):** AC-P3.1–P3.3 pass; slug unique, category tồn tại, publish_status ∈ enum.
+> 11 tests. Layered. CRUD chỉ nhận DRAFT/ARCHIVED (PUBLISHED qua action gated ở T6 → set PUBLISHED qua CRUD = 422). CRM index thấy mọi status. slug auto-gen hard-unique. Service set default DRAFT (DB default chưa nạp in-memory).
 **Verify:** `php artisan test --filter=ProductCrudTest`.
 **Dependencies:** T3
 **Files:** `Crm/ProductController`, `Http/Requests/Crm/{Store,Update}ProductRequest`, `Services/Crm/ProductService`, `Repositories/.../ProductRepository*`, route, test
