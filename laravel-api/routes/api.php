@@ -7,6 +7,7 @@ use App\Http\Controllers\Crm\CategoryController;
 use App\Http\Controllers\Crm\EmployeeController;
 use App\Http\Controllers\Crm\InventoryController;
 use App\Http\Controllers\Crm\ProductController;
+use App\Http\Controllers\Crm\ProductMediaController;
 use App\Http\Controllers\Crm\VariantController;
 use App\Http\Controllers\Shop\Auth\LoginController as ShopLoginController;
 use App\Http\Controllers\Shop\CatalogController;
@@ -75,6 +76,11 @@ Route::prefix('crm')->group(function () {
             Route::post('/products/{product}/variants', [VariantController::class, 'store']);
             Route::put('/variants/{variant}', [VariantController::class, 'update']);
             Route::delete('/variants/{variant}', [VariantController::class, 'destroy']);
+
+            Route::get('/products/{product}/media', [ProductMediaController::class, 'index']);
+            Route::post('/products/{product}/media', [ProductMediaController::class, 'store']);
+            Route::put('/media/{media}/primary', [ProductMediaController::class, 'setPrimary']);
+            Route::delete('/media/{media}', [ProductMediaController::class, 'destroy']);
         });
 
         // Inventory — quyền riêng manage_inventory

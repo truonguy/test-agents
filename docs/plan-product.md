@@ -146,16 +146,17 @@ Thứ tự: **Foundation (T1–T2) → CRM CRUD (T3–T6) → Shop (T7–T9) →
 
 ### Phase 4 — Media
 
-#### Task 10: Upload Product Image · `permission:manage_product`
+#### Task 10: Upload Product Image · `permission:manage_product` ✅ DONE
 **Description:** `MediaService` (disk local) upload nhiều ảnh, resize/optimize (intervention/image), 1 primary; validate mime/size; soft delete media.
 **Acceptance (FR-P9):** AC-P9.1–P9.3.
+> 10 tests (Storage::fake). `MediaService` resize scaleDown≤1200 + encode jpg q80, disk 'public'. Upload nhiều, ảnh đầu = primary, setPrimary endpoint. Validate image/mimes/max 5MB. soft delete. customer→401, thiếu quyền→403.
 **Verify:** `php artisan test --filter=ProductMediaTest` (dùng `Storage::fake()`).
 **Dependencies:** T4
 **Files:** `Services/Media/MediaService`, `Crm/ProductMediaController`, `Http/Requests/Crm/UploadMediaRequest`, route, test
 **Scope:** M
 
-### ✅ Checkpoint: Media (T10)
-- [ ] Upload + resize + primary + soft delete pass. Review.
+### ✅ Checkpoint: Media (T10) — ĐẠT
+- [x] Upload + resize + primary + soft delete pass. Full suite 146 passed.
 
 ---
 
