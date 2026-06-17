@@ -17,6 +17,11 @@ class CartController extends Controller
         private readonly CartService $carts,
     ) {}
 
+    public function show(Request $request): JsonResponse
+    {
+        return response()->json($this->carts->viewFor($request->user()));
+    }
+
     public function store(AddCartItemRequest $request): JsonResponse
     {
         $item = $this->carts->addItem(

@@ -39,6 +39,17 @@ class CartService
         $item->delete();
     }
 
+    /**
+     * @return array{items: mixed, count: int, subtotal: float}
+     */
+    public function viewFor(Customer $customer): array
+    {
+        return $this->summary($this->carts->activeCartFor($customer));
+    }
+
+    /**
+     * @return array{items: mixed, count: int, subtotal: float}
+     */
     public function summary(Cart $cart): array
     {
         $cart->loadMissing('items.variant');

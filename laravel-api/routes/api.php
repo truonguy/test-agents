@@ -32,6 +32,7 @@ Route::get('/products/{slug}', [CatalogController::class, 'show']);
 
 // Cart / Order (customer) — yêu cầu customer token
 Route::middleware('ensure_guard:customer')->group(function () {
+    Route::get('/cart', [CartController::class, 'show']);
     Route::post('/cart/items', [CartController::class, 'store']);
     Route::put('/cart/items/{item}', [CartController::class, 'update']);
     Route::delete('/cart/items/{item}', [CartController::class, 'destroy']);

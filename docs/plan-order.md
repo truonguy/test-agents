@@ -67,16 +67,17 @@ Thứ tự: **Cart (T1–T5) → Order schema + reserve (T6–T7) → Checkout (
 **Files:** `Shop/CartController`(update/destroy), `Http/Requests/Shop/UpdateCartItemRequest`, `CartService`, route, test
 **Scope:** S
 
-#### Task 4: View cart
+#### Task 4: View cart ✅ DONE
 **Description:** `GET /api/cart` → items + subtotal + count (giá hiện tại variant).
 **Acceptance (FR-C5):** AC-C5.1.
+> 3 tests. `viewFor` (activeCartFor + summary). subtotal = Σ price×qty (giá hiện tại); cart rỗng → 0/0/[].
 **Verify:** `php artisan test --filter=ViewCartTest`.
 **Dependencies:** T2
 **Files:** `Shop/CartController`(show), `CartService`(summary), route, test
 **Scope:** S
 
-### ✅ Checkpoint: Cart (T1–T4)
-- [ ] Add/merge/update/remove/view cart hoạt động; RBAC customer. Full suite xanh. Review.
+### ✅ Checkpoint: Cart (T1–T4) — ĐẠT
+- [x] Add/merge/update/remove/view cart hoạt động; RBAC customer. Full suite 166 passed.
 
 ---
 
