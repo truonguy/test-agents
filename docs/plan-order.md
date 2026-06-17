@@ -83,9 +83,10 @@ Thứ tự: **Cart (T1–T5) → Order schema + reserve (T6–T7) → Checkout (
 
 ### Phase 2 — Order foundation + reserve
 
-#### Task 5: Order schema + OrderStatus + OrderStateMachine
+#### Task 5: Order schema + OrderStatus + OrderStateMachine ✅ DONE
 **Description:** Migration `orders` (status, total, idempotency_key unique, recipient/phone/address) + `order_items` (snapshot); enum `OrderStatus`; `OrderStateMachine` (transitions hợp lệ, thuần logic — chưa endpoint).
 **Acceptance (FR-C8):** AC-C8.1–C8.2; unit: transition hợp lệ/không hợp lệ.
+> 18 tests. `OrderStateMachine` (confirm/pack/ship/complete/cancel) + `InvalidOrderTransitionException`(422). orders/order_items + enum + factories. idempotency_key unique.
 **Verify:** `php artisan test --filter="OrderSchemaTest|OrderStateMachineTest"`.
 **Dependencies:** None (song song được với Cart)
 **Files:** `database/migrations/*`(×2), `app/Models/{Order,OrderItem}.php`, `app/Enums/OrderStatus.php`, `app/Services/Order/OrderStateMachine.php`, factories, tests
