@@ -27,6 +27,18 @@ class CartService
         return $item;
     }
 
+    public function updateItem(CartItem $item, int $quantity): CartItem
+    {
+        $item->update(['quantity' => $quantity]);
+
+        return $item;
+    }
+
+    public function removeItem(CartItem $item): void
+    {
+        $item->delete();
+    }
+
     public function summary(Cart $cart): array
     {
         $cart->loadMissing('items.variant');

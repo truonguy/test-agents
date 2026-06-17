@@ -58,9 +58,10 @@ Thứ tự: **Cart (T1–T5) → Order schema + reserve (T6–T7) → Checkout (
 **Files:** `Shop/CartController`, `Http/Requests/Shop/AddCartItemRequest`, `Services/Shop/CartService`, `Repositories/.../CartRepository*`, route, test
 **Scope:** M
 
-#### Task 3: Update + Remove cart item
+#### Task 3: Update + Remove cart item ✅ DONE
 **Description:** `PUT /api/cart/items/{item}` (qty>0), `DELETE /api/cart/items/{item}`; chỉ item thuộc cart mình.
 **Acceptance (FR-C3, FR-C4):** AC-C3.1–C3.2, AC-C4.1.
+> 6 tests. `authorizeOwnership` → item của customer khác trả 404 (không lộ tồn tại). qty min:1. UpdateCartItemRequest.
 **Verify:** `php artisan test --filter=UpdateCartItemTest`.
 **Dependencies:** T2
 **Files:** `Shop/CartController`(update/destroy), `Http/Requests/Shop/UpdateCartItemRequest`, `CartService`, route, test
