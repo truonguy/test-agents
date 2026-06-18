@@ -47,16 +47,17 @@ Thứ tự: **Foundation (T1–T2) → Gateway (T3) → Create (T4) → Webhook+
 **Files:** `database/migrations/*`(×2), `app/Models/{Payment,PaymentAttempt}.php`, `app/Enums/{PaymentStatus,PaymentMethod}.php`, factories
 **Scope:** M
 
-#### Task 2: PaymentStateMachine
+#### Task 2: PaymentStateMachine ✅ DONE
 **Description:** `PaymentStateMachine` (start PENDING→PROCESSING; success →SUCCESS; fail →FAILED; expire (PENDING/PROCESSING)→EXPIRED) + `InvalidPaymentTransitionException`(422). Thuần logic.
 **Acceptance (FR-PM2):** AC-PM2.1–PM2.2; unit transitions hợp lệ/không.
+> 12 tests (#[DataProvider]). Mirror OrderStateMachine. success/fail chỉ từ PROCESSING; expire từ PENDING/PROCESSING. Terminal SUCCESS/FAILED/EXPIRED.
 **Verify:** `php artisan test --filter=PaymentStateMachineTest`.
 **Dependencies:** None (song song T1)
 **Files:** `app/Services/Payment/PaymentStateMachine.php`, `app/Exceptions/InvalidPaymentTransitionException.php`, test
 **Scope:** S
 
-### ✅ Checkpoint: Foundation (T1–T2)
-- [ ] migrate sạch; state machine đúng. Full suite xanh. Review.
+### ✅ Checkpoint: Foundation (T1–T2) — ĐẠT
+- [x] migrate sạch; state machine đúng. Full suite 233 passed.
 
 ---
 
