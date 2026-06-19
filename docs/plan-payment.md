@@ -73,16 +73,17 @@ Thứ tự: **Foundation (T1–T2) → Gateway (T3) → Create (T4) → Webhook+
 **Scope:** L → tách T3a (interface+Manager+Cod) / T3b (Vnpay+hash) nếu cần.
 > ⚠️ *Ask first* nếu cần SDK VNPay; mặc định tự build URL + HMAC (không thêm package).
 
-#### Task 4: Create Payment (Shop) · `ensure_guard:customer`
+#### Task 4: Create Payment (Shop) · `ensure_guard:customer` ✅ DONE
 **Description:** `POST /api/orders/{order}/payment {method}`; owner + order PENDING; tạo payment (amount=order.total) + attempt; COD → SUCCESS + confirm order ngay; VNPAY → PROCESSING + trả payment_url.
 **Acceptance (FR-PM3, + COD §0):** AC-PM3.1–PM3.3; COD → order CONFIRMED ngay.
+> 7 tests. `PaymentService.createForOrder` (DB::transaction): gateway.create → attempt + state machine start; COD → success + OrderService.transition('confirm'); VNPay → PROCESSING + payment_url. amount snapshot. owner→404, !PENDING→422, method lạ→422, employee→401.
 **Verify:** `php artisan test --filter=CreatePaymentTest`.
 **Dependencies:** T2, T3
 **Files:** `Shop/PaymentController`, `Http/Requests/Shop/CreatePaymentRequest`, `Services/Payment/PaymentService`, `Repositories/.../PaymentRepository*`, route, test
 **Scope:** M
 
-### ✅ Checkpoint: Create (T3–T4)
-- [ ] COD confirm ngay; VNPay trả payment_url; owner-only. Review.
+### ✅ Checkpoint: Create (T3–T4) — ĐẠT
+- [x] COD confirm ngay; VNPay trả payment_url; owner-only. Full suite 247 passed.
 
 ---
 

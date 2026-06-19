@@ -8,6 +8,7 @@ use App\Repositories\Contracts\CustomerRepositoryInterface;
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use App\Repositories\Contracts\InventoryRepositoryInterface;
 use App\Repositories\Contracts\OrderRepositoryInterface;
+use App\Repositories\Contracts\PaymentRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Repositories\Contracts\VariantRepositoryInterface;
 use App\Repositories\Eloquent\CartRepository;
@@ -16,6 +17,7 @@ use App\Repositories\Eloquent\CustomerRepository;
 use App\Repositories\Eloquent\EmployeeRepository;
 use App\Repositories\Eloquent\InventoryRepository;
 use App\Repositories\Eloquent\OrderRepository;
+use App\Repositories\Eloquent\PaymentRepository;
 use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\Eloquent\VariantRepository;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         InventoryRepositoryInterface::class => InventoryRepository::class,
         CartRepositoryInterface::class => CartRepository::class,
         OrderRepositoryInterface::class => OrderRepository::class,
+        PaymentRepositoryInterface::class => PaymentRepository::class,
     ];
 
     /**
