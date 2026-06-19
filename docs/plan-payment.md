@@ -123,16 +123,17 @@ Thứ tự: **Foundation (T1–T2) → Gateway (T3) → Create (T4) → Webhook+
 **Files:** `Crm/PaymentDashboardController`, `PaymentService`(retry/list), route, test
 **Scope:** M
 
-#### Task 8: Reconciliation cron
+#### Task 8: Reconciliation cron ✅ DONE
 **Description:** `php artisan payments:reconcile`: query payment PENDING/PROCESSING quá timeout → `gateway.query(ref)` sync; quá 15' không kết quả → EXPIRED. Idempotent, chạy lại an toàn.
 **Acceptance (FR-PM8):** AC-PM8.1–PM8.3.
+> 5 tests. `PaymentReconciler.reconcile` quét payment treo quá cutoff → `reconcilePayment` (query gateway: SUCCESS→confirm, FAILED→fail, else→EXPIRED). Command `payments:reconcile`. Refactor `markSuccess` dùng chung webhook+reconcile. Terminal untouched (idempotent).
 **Verify:** `php artisan test --filter=ReconcileTest` (travel time + fake gateway query).
 **Dependencies:** T5
 **Files:** `Console/Commands/ReconcilePaymentsCommand`, `Services/Payment/PaymentReconciler`, `config/payment.php`(timeout), `bootstrap/app.php`(schedule? optional), test
 **Scope:** M
 
-### ✅ Checkpoint: CRM+Reconcile (T7–T8)
-- [ ] Dashboard list/detail/retry; reconcile sync/EXPIRED đúng. Review.
+### ✅ Checkpoint: CRM+Reconcile (T7–T8) — ĐẠT
+- [x] Dashboard list/detail/retry; reconcile sync/EXPIRED đúng. Full suite 268 passed.
 
 ---
 

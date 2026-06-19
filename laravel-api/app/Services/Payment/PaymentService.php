@@ -138,8 +138,7 @@ class PaymentService
                 ?->update(['status' => $result['status']->value, 'raw_payload' => $payload]);
 
             if ($result['status'] === PaymentStatus::SUCCESS) {
-                $this->applyStatus($payment, 'success');
-                $this->confirmOrder($payment);
+                $this->markSuccess($payment);
             } else {
                 $this->applyStatus($payment, 'fail');
                 // FAILED/EXPIRED → order giữ PENDING (không đổi).
@@ -147,6 +146,39 @@ class PaymentService
 
             return $payment->fresh();
         });
+    }
+
+    /**
+     * Đối soát 1 payment treo: query gateway → SUCCESS/FAILED đồng bộ; không có kết quả → EXPIRED.
+     * Idempotent: bỏ qua nếu đã terminal.
+     */
+    public function reconcilePayment(Payment $payment): void
+    {
+        if (in_array($payment->status, [PaymentStatus::SUCCESS, PaymentStatus::FAILED, PaymentStatus::EXPIRED], true)) {
+            return;
+        }
+
+        $ref = $payment->attempts()->latest('id')->first()?->provider_txn_ref;
+        $status = $ref !== null
+            ? $this->gateways->for($payment->method)->query($ref)
+            : PaymentStatus::PROCESSING;
+
+        DB::transaction(function () use ($payment, $status) {
+            match ($status) {
+                PaymentStatus::SUCCESS => $this->markSuccess($payment),
+                PaymentStatus::FAILED => $this->applyStatus($payment, 'fail'),
+                default => $this->applyStatus($payment, 'expire'), // không có kết quả sau timeout
+            };
+        });
+    }
+
+    /**
+     * Payment SUCCESS → đổi status + confirm order.
+     */
+    private function markSuccess(Payment $payment): void
+    {
+        $this->applyStatus($payment, 'success');
+        $this->confirmOrder($payment);
     }
 
     /**
