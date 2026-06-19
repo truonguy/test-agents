@@ -199,4 +199,3 @@ class PaymentService
         $payment->update(['status' => $target->value]);
     }
 }
-

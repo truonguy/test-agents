@@ -2,6 +2,7 @@
 
 namespace App\Services\Payment\Gateways;
 
+use App\Enums\PaymentStatus;
 use App\Models\Payment;
 
 /**
@@ -21,14 +22,14 @@ interface PaymentGateway
      * Verify payload callback/webhook.
      *
      * @param  array<string, mixed>  $payload
-     * @return array{ref: string|null, status: \App\Enums\PaymentStatus, valid: bool}
+     * @return array{ref: string|null, status: PaymentStatus, valid: bool}
      */
     public function verify(array $payload): array;
 
     /**
      * Truy vấn trạng thái giao dịch tại gateway (dùng cho reconciliation).
      */
-    public function query(string $ref): \App\Enums\PaymentStatus;
+    public function query(string $ref): PaymentStatus;
 
     public function name(): string;
 }

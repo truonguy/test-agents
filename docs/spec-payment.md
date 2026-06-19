@@ -159,10 +159,14 @@ Feature tests `tests/Feature/Payment/`, MySQL `laravel_test`. **Fake gateway** (
 | 7 | Amount/currency | ✅ **VND integer**; nhân 100 khi build URL VNPay |
 | 8 | Webhook auth | ✅ **Chỉ verify chữ ký**, không guard (endpoint public) |
 
-## 10. Success Criteria
-- [ ] AC-PM1..PM8 pass bằng feature test.
-- [ ] checkout → create payment → webhook → order CONFIRMED (VNPay) / COD theo §9.
-- [ ] Webhook idempotent (gửi 2 lần không double-confirm).
-- [ ] Gateway abstraction: thêm gateway mới không sửa caller.
-- [ ] CRM xem/retry/search payment; customer chỉ payment order mình.
-- [ ] 8 điểm §9 được chốt và spec cập nhật trước Implement.
+## 10. Success Criteria — trạng thái (sau T1–T9)
+- [x] AC-PM1..PM8 pass bằng feature test (**268 tests / 664 assertions xanh** — gồm Auth+Product+Order+Payment).
+- [x] COD → CONFIRMED ngay; VNPay → create payment → webhook (verify) → order CONFIRMED.
+- [x] Webhook idempotent (gửi 2 lần không double-confirm; dedupe provider_txn_ref + terminal-guard).
+- [x] Gateway abstraction: thêm gateway mới = thêm adapter, không sửa caller.
+- [x] CRM xem/retry/filter payment (manage_order); customer chỉ tạo payment cho order mình.
+- [x] Reconciliation cron: payment treo quá 15' → EXPIRED / sync; idempotent.
+- [x] 8 điểm §9 đã chốt; spec cập nhật.
+- [~] Coverage số: không đo tự động (môi trường thiếu Xdebug/PCOV — như các feature trước). Định tính: tests/Feature/Payment phủ schema/state-machine/gateway/create/webhook/sync/dashboard/reconcile.
+
+> ⚠️ Trước deploy: cấu hình VNPay creds thật (env) + cắm API `query()` thật vào `VnpayAdapter` cho reconciliation.

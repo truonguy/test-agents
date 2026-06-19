@@ -139,16 +139,17 @@ Thứ tự: **Foundation (T1–T2) → Gateway (T3) → Create (T4) → Webhook+
 
 ### Phase 5 — Wrap-up
 
-#### Task 9: Tests + Pint + cập nhật spec
+#### Task 9: Tests + Pint + cập nhật spec ✅ DONE
 **Description:** Full suite, Pint, cập nhật spec-payment §9/§10; ghi chú coverage (định tính).
 **Acceptance:** Mọi AC-PM* pass; full suite (gồm Auth+Product+Order) xanh; Pint clean; spec cập nhật.
+> Pint clean (FQN→use). Full suite 268 passed. Spec §10 cập nhật. Pre-deploy: VNPay creds env + API query() thật.
 **Verify:** `php artisan test`; `./vendor/bin/pint --test`.
 **Dependencies:** T1–T8
 **Files:** `tests/*`, `docs/spec-payment.md`
 **Scope:** S
 
-### ✅ Checkpoint: Complete
-- [ ] Success Criteria spec §10 đạt; sẵn sàng review/merge.
+### ✅ Checkpoint: Complete — ĐẠT
+- [x] Success Criteria spec §10 đạt (268 tests / 664 assertions, Pint clean).
 
 ---
 
